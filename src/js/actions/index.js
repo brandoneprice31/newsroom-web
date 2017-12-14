@@ -6,6 +6,13 @@ export const signInUser = (user) => {
     }
 };
 
+export const logOutUser = (user) => {
+    console.log("Logging out user");
+    return {
+        type: 'USER_LOGGED_OUT'
+    }
+};
+
 export const pageChange = (page) => {
     console.log("Page changed to: ", page);
     return {

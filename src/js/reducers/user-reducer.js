@@ -9,6 +9,9 @@ export default function (state = null, action) {
         case 'USER_SIGNED_IN':
             return action.payload;
             break;
+        case 'USER_LOGGED_OUT':
+          return null;
+          break;
     }
     return state;
 }
