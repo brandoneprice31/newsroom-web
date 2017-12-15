@@ -33,17 +33,24 @@ class NewsRoom extends Component {
       }
 
       return (
-        <div>
-          <h1>NewsRoom</h1>
-          <hr />
-          <h2>{title}</h2>
-          <input id="pageInput" type="text" onChange={() => this.pageInputChanged()} />
-          {table}
-          {submitCommentForm}
-          <hr />
-          {this.props.user.username}
-          <br />
-          <button onClick={ () => this.logOutClicked() }>Logout</button>
+        <div className="ui page grid">
+          <div className="two column row">
+            <div className="column">
+              <h1>Hello</h1>
+            </div>
+            <div className="column">
+              <h1>NewsRoom</h1>
+              <hr />
+              <h2>{title}</h2>
+              <input id="pageInput" type="text" onChange={() => this.pageInputChanged()} />
+              {table}
+              {submitCommentForm}
+              <hr />
+              {this.props.user.username}
+              <br />
+              <button onClick={ () => this.logOutClicked() }>Logout</button>
+            </div>
+          </div>
         </div>
       )
   }

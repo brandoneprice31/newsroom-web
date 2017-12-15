@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import SigninForm from '../components/SigninForm';
-import NewsRoom from '../components/NewsRoom'
-import {signInUser} from '../actions'
-require('../../scss/style.scss');
+import NewsRoom from '../components/NewsRoom';
+import {signInUser} from '../actions';
 
 class App extends Component {
   render() {
@@ -16,19 +15,20 @@ class App extends Component {
       this.props.signInUser(cachedUser);
     }
 
+    var currDisplay = null;
+
     if (!this.props.user) {
-      return (
-        <div>
-          <SigninForm />
-        </div>
-      );
+      currDisplay = ( <SigninForm /> );
+    } else {
+      this.saveCachedUser(this.props.user);
+      currDisplay = ( <NewsRoom /> );
     }
 
-    this.saveCachedUser(this.props.user);
-
     return (
-      <NewsRoom />
-    )
+      <div className="ui center aligned container">
+        { currDisplay }
+      </div>
+    );
   }
 
   getCachedUser() {
