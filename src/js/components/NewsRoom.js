@@ -21,7 +21,7 @@ class NewsRoom extends Component {
             <Container style={{width: "80%"}}>
               <Grid>
                 <Grid.Row>
-                  <div style={{overflowY: "scroll", height:400}}>
+                  <div style={{overflowY: "scroll", height:400, width:"100%"}}>
                     <Comment.Group>
                       {this.props.comments.map((comment) => (
                         <Comment key={comment._id}>

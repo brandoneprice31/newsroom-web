@@ -13,7 +13,7 @@ class SigninForm extends Component {
 
   render() {
     var arr = [
-      (<h1>NewsRoom</h1>),
+      (<h1 style={{fontSize:50}}>NewsRoom</h1>),
       (<Input id="username" type="text" size="small" placeholder="username"></Input>),
       (<Input id="password" type="text" size="small" placeholder="password"></Input>),
       (<Container>
