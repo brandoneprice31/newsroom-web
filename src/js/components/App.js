@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import { Container } from 'semantic-ui-react';
+
 import SigninForm from '../components/SigninForm';
 import NewsRoom from '../components/NewsRoom';
 import {signInUser} from '../actions';
@@ -25,9 +27,9 @@ class App extends Component {
     }
 
     return (
-      <div className="ui center aligned container">
+      <Container fluid>
         { currDisplay }
-      </div>
+      </Container>
     );
   }
 

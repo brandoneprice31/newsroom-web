@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Client from '../client/client';
 import {pageChange, commentsChange, logOutUser} from '../actions'
+import { Container, Grid, Image, Segment, Comment, Button, Input, Divider, TextArea } from 'semantic-ui-react';
 
 class NewsRoom extends Component {
   constructor(props){
@@ -12,46 +13,109 @@ class NewsRoom extends Component {
   render() {
       var title = (this.props.page) ? this.props.page.website : "Enter a page:";
       var table = null;
+      var iFrame = null;
+
       if (this.props.comments) {
         table = (
-          <ul>
-            {this.props.comments.map((comment) => (
-              <li><b>{comment.user.username}:</b> {comment.message}</li>
-            ))}
-          </ul>
+          <Grid.Row>
+            <Container style={{width: "80%"}}>
+              <Grid>
+                <Grid.Row>
+                  <div style={{overflowY: "scroll", height:400}}>
+                    <Comment.Group>
+                      {this.props.comments.map((comment) => (
+                        <Comment key={comment._id}>
+                          <Comment.Content>
+                            <Comment.Author>{comment.user.username}</Comment.Author>
+                            <Comment.Text>{comment.message}</Comment.Text>
+                          </Comment.Content>
+                        </Comment>
+                      ))}
+                    </Comment.Group>
+                  </div>
+                </Grid.Row>
+                <Grid.Row>
+                  <Container fluid>
+                    <Grid centered>
+                      <Grid.Row>
+                        <TextArea placeholder=" enter a comment..." id="commentInput" type="text" size='mini' style={{borderRadius: 2, minHeight: 75, minWidth: "90%", maxWidth:"90%", maxHeight:200}}/>
+                      </Grid.Row>
+                      <Grid.Row>
+                        <Button onClick={() => this.submitCommentClicked()} size='medium' color='blue' style={{width:"50%"}}>
+                          Submit
+                        </Button>
+                      </Grid.Row>
+                    </Grid>
+                  </Container>
+                </Grid.Row>
+              </Grid>
+            </Container>
+          </Grid.Row>
         );
-      }
-      var submitCommentForm = null;
-      if (this.props.page) {
-        submitCommentForm = (
-          <div>
-            <input id="commentInput" type="text" />
-            <br />
-            <button onClick={() => this.submitCommentClicked()}>Submit</button>
-          </div>
+
+        iFrame = (
+          <Container fluid>
+            <iframe src={this.getURL()} width="100%" style={{minHeight:900, height:"100%"}} frameBorder="0"/><br />
+          </Container>
+        );
+      } else {
+        iFrame =  (
+          <Container fluid>
+              <h1 style={{position: "absolute", top:"120%", left:"40%"}}>
+                Load a page...
+              </h1>
+          </Container>
         );
       }
 
       return (
-        <div className="ui page grid">
-          <div className="two column row">
-            <div className="column">
-              <h1>Hello</h1>
-            </div>
-            <div className="column">
-              <h1>NewsRoom</h1>
-              <hr />
-              <h2>{title}</h2>
-              <input id="pageInput" type="text" onChange={() => this.pageInputChanged()} />
-              {table}
-              {submitCommentForm}
-              <hr />
-              {this.props.user.username}
-              <br />
-              <button onClick={ () => this.logOutClicked() }>Logout</button>
-            </div>
-          </div>
-        </div>
+        <Container fluid>
+          <Grid columns='two'>
+            <Grid.Column width={11} floated='left'>
+              {iFrame}
+            </Grid.Column>
+            <Grid.Column width={5} floated='right'>
+              <Grid divided='vertically'>
+                <Container style={{width: "90%", height:160}}>
+                  <Grid.Row>
+                      <Grid>
+                        <Grid.Row>
+                          <h1 style={{top:20, position:"relative", fontSize:50}}>
+                            NewsRoom
+                          </h1>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <h4>
+                            {title}
+                          </h4>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Input id="pageInput" type="text" onChange={() => this.pageInputChanged()} size='mini' style={{width:"70%", bottom:20, position:"relative"}}/>
+                        </Grid.Row>
+                      </Grid>
+                  </Grid.Row>
+                </Container>
+                {table}
+                <Grid.Row>
+                  <Container fluid>
+                    <Grid centered>
+                      <Grid.Row>
+                        <div style={{position:"relative", top:10}}>
+                          {this.props.user.username}
+                        </div>
+                      </Grid.Row>
+                      <Grid.Row>
+                        <Button onClick={ () => this.logOutClicked() } size='mini' style={{position:"relative", bottom:15, width:"50%"}}>
+                          Logout
+                        </Button>
+                      </Grid.Row>
+                    </Grid>
+                  </Container>
+                </Grid.Row>
+              </Grid>
+            </Grid.Column>
+          </Grid>
+        </Container>
       )
   }
 

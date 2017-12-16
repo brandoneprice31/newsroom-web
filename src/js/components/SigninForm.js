@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import { Container, Grid, Image, Segment, Comment, Button, Input, Divider } from 'semantic-ui-react';
+
 import {signInUser} from '../actions';
 import Client from '../client/client';
 
@@ -10,33 +12,33 @@ class SigninForm extends Component {
   }
 
   render() {
-      if (this.state.showConfirm) {
-        return (
-            <div>
-                <h1>Login</h1>
-                <input id="username" type="text" placeholder="username" />
-                <br />
-                <input id="password" type="text" placeholder="password" />
-                <br />
-                <input id="confirm" type="text" placeholder="confirm password" />
-                <br />
-                <button onClick={() => this.loginClick()}>Login</button>
-                <button onClick={() => this.signUpClick()}>Sign-Up</button>
-            </div>
-        );
-      }
+    var arr = [
+      (<h1>NewsRoom</h1>),
+      (<Input id="username" type="text" size="small" placeholder="username"></Input>),
+      (<Input id="password" type="text" size="small" placeholder="password"></Input>),
+      (<Container>
+        <Button onClick={() => this.loginClick()} size='mini'>Login</Button>
+        <Button onClick={() => this.signUpClick()} size='mini'>Sign-Up</Button>
+      </Container>)
+    ];
 
-      return (
-          <div>
-              <h1>Login</h1>
-              <input id="username" type="text" placeholder="username" />
-              <br />
-              <input id="password" type="text" placeholder="password" />
-              <br />
-              <button onClick={() => this.loginClick()}>Login</button>
-              <button onClick={() => this.signUpClick()}>Sign-Up</button>
-          </div>
-      );
+    if (this.state.showConfirm) {
+      arr.splice(3, 0, (<Input id="confirm" type="text" size="small" placeholder="confirm password"></Input>));
+    }
+
+    return (
+      <Container fluid>
+        <Grid centered style={{top: 100, position: "relative"}}>
+          {
+            arr.map((elem, index) => (
+              <Grid.Row key={index}>
+                {elem}
+              </Grid.Row>
+            ))
+          }
+        </Grid>
+      </Container>
+    );
   }
 
   loginClick() {
