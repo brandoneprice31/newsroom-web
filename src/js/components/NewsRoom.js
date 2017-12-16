@@ -11,7 +11,7 @@ class NewsRoom extends Component {
   }
 
   render() {
-      var title = (this.props.page) ? this.props.page.website : "Enter a page:";
+      var title = (this.props.page) ? this.props.page.website : "Enter a url:";
       var table = null;
       var iFrame = null;
 
@@ -62,7 +62,7 @@ class NewsRoom extends Component {
         iFrame =  (
           <Container fluid>
               <h1 style={{position: "absolute", top:"120%", left:"40%"}}>
-                Load a page...
+                Enter a url...
               </h1>
           </Container>
         );
