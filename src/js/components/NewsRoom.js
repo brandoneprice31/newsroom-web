@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Client from '../client/client';
 import {pageChange, commentsChange, logOutUser} from '../actions'
-import { Container, Grid, Image, Segment, Comment, Button, Input, Divider, TextArea } from 'semantic-ui-react';
+import { Icon, Header, Dimmer, Container, Grid, Image, Segment, Comment, Button, Input, Divider, TextArea } from 'semantic-ui-react';
 
 class NewsRoom extends Component {
   constructor(props){
@@ -21,7 +21,7 @@ class NewsRoom extends Component {
             <Container style={{width: "80%"}}>
               <Grid>
                 <Grid.Row>
-                  <div style={{overflowY: "scroll", height:400, width:"100%"}}>
+                  <div style={{overflowY: "scroll", maxHeight:400, width:"100%"}}>
                     <Comment.Group>
                       {this.props.comments.map((comment) => (
                         <Comment key={comment._id}>
@@ -55,16 +55,20 @@ class NewsRoom extends Component {
 
         iFrame = (
           <Container fluid>
-            <iframe id='iframe' src={this.getURL()} width="100%" style={{minHeight:900, height:"100%", overflow:"hidden"}} frameBorder="0" onLoad={() => this.iframeSrcChange()} />
+            <iframe id='iframe' src={this.getURL()} width="100%" style={{minHeight:window.outerHeight, height:"100%", overflow:"hidden"}} frameBorder="0" />
             <br />
           </Container>
         );
       } else {
         iFrame =  (
           <Container fluid>
-              <h1 style={{position: "absolute", top:"120%", left:"40%"}}>
-                Enter a url...
-              </h1>
+              <Dimmer active={true} style={{minHeight:window.outerHeight, height:"100%"}}>
+                <Header as='h2' icon inverted>
+                  <Icon name='browser' />
+                    Enter a URL
+                  <Header.Subheader>and a page will be loaded here..</Header.Subheader>
+                </Header>
+              </Dimmer>
           </Container>
         );
       }

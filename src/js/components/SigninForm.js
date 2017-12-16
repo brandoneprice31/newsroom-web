@@ -15,7 +15,7 @@ class SigninForm extends Component {
     var arr = [
       (<h1 style={{fontSize:50}}>NewsRoom</h1>),
       (<Input id="username" type="text" size="small" placeholder="username"></Input>),
-      (<Input id="password" type="text" size="small" placeholder="password"></Input>),
+      (<Input id="password" type="password" size="small" placeholder="password"></Input>),
       (<Container>
         <Button onClick={() => this.loginClick()} size='mini'>Login</Button>
         <Button onClick={() => this.signUpClick()} size='mini'>Sign-Up</Button>
@@ -23,7 +23,7 @@ class SigninForm extends Component {
     ];
 
     if (this.state.showConfirm) {
-      arr.splice(3, 0, (<Input id="confirm" type="text" size="small" placeholder="confirm password"></Input>));
+      arr.splice(3, 0, (<Input id="confirm" type="password" size="small" placeholder="confirm password"></Input>));
     }
 
     return (
