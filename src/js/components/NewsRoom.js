@@ -55,7 +55,8 @@ class NewsRoom extends Component {
 
         iFrame = (
           <Container fluid>
-            <iframe src={this.getURL()} width="100%" style={{minHeight:900, height:"100%"}} frameBorder="0"/><br />
+            <iframe id='iframe' src={this.getURL()} width="100%" style={{minHeight:900, height:"100%", overflow:"hidden"}} frameBorder="0" onLoad={() => this.iframeSrcChange()} />
+            <br />
           </Container>
         );
       } else {
@@ -117,6 +118,13 @@ class NewsRoom extends Component {
           </Grid>
         </Container>
       )
+  }
+
+  iframeSrcChange() {
+    var iframe = document.getElementById('iframe');
+    console.log("IFRAME:", iframe);
+    document.getElementById("pageInput").value = iframe.src;
+    this.pageInputChanged();
   }
 
   pageInputChanged() {
