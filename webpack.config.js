@@ -24,7 +24,7 @@ module.exports = {
     },
     output: {
         path: 'build',
-        filename: 'js/bundle.min.js'
+        filename: 'static/js/bundle.min.js'
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin()

@@ -1,17 +1,17 @@
 {
-  "base": "src/styles/",
+  "base": "src/styles",
   "paths": {
     "source": {
       "config": "src/theme.config",
       "definitions": "src/definitions/",
-      "site": "src/site/",
+      "site": "src/styles/",
       "themes": "src/themes/"
     },
     "output": {
-      "packaged": "../../build/styles/",
-      "uncompressed": "../../build/styles/components/",
-      "compressed": "../../build/styles/components/",
-      "themes": "../../build/styles/themes/"
+      "packaged": "../../build/static/styles/",
+      "uncompressed": "../../build/static/styles/",
+      "compressed": "../../build/static/styles/",
+      "themes": "dist/themes/"
     },
     "clean": "dist/"
   },
