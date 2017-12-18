@@ -1,11 +1,9 @@
 import $ from "jquery";
 
-const BASE_URL = "http://localhost:8080/"
-
 class Client {
   static get(url, params, successHandler, errorHandler) {
     $.ajax({
-      url: BASE_URL + url,
+      url: this.baseUrl() + url,
       data: params,
       type: 'GET',
       dataType: 'json',
@@ -21,7 +19,7 @@ class Client {
   static post(url, data, successHandler, errorHandler) {
     $.ajax({
       type: 'POST',
-      url: BASE_URL + url,
+      url: this.baseUrl() + url,
       data: JSON.stringify(data),
       dataType: 'json',
       beforeSend: function(x) {
@@ -36,6 +34,10 @@ class Client {
         errorHandler(data);
       }
     });
+  }
+
+  static baseUrl(){
+    return 'http://localhost:8080/';
   }
 }
 

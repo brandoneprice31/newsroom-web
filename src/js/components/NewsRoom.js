@@ -49,9 +49,11 @@ class NewsRoom extends Component {
           </Grid.Row>
         );
 
+        var iframe_url = this.props.page.html ? 'http://localhost:8080' + '/pages/'+this.props.page._id+'/html' : this.getURL();
+
         iFrame = (
           <Container fluid>
-            <iframe id='iframe' src={this.getURL()} width="100%" style={{minHeight:window.outerHeight+400, height:"100%", overflow:"hidden"}} frameBorder="0" />
+            <iframe id='iframe' src={iframe_url} onLoad={() => this.checkIframe()} width="100%" style={{minHeight:window.outerHeight+400, height:"100%", overflow:"hidden"}} frameBorder="0" />
             <br />
           </Container>
         );
@@ -82,7 +84,7 @@ class NewsRoom extends Component {
                     <Grid>
                       <Grid.Row>
                         <h1 style={{top:20, position:"relative", fontSize:50}}>
-                          NewsRoom
+                          Newsroom
                         </h1>
                       </Grid.Row>
                       <Grid.Row>
@@ -120,11 +122,9 @@ class NewsRoom extends Component {
       )
   }
 
-  iframeSrcChange() {
+  checkIframe() {
     var iframe = document.getElementById('iframe');
-    console.log("IFRAME:", iframe);
-    document.getElementById("pageInput").value = iframe.src;
-    this.pageInputChanged();
+    console.log(iframe);
   }
 
   changeToRelated(url) {
