@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Client from '../client/client';
+import Comments from './Comments';
+import Related from './Related';
 import {pageChange, commentsChange, logOutUser} from '../actions'
 import { Icon, Header, Dimmer, Container, Grid, Image, Segment, Comment, Button, Input, Divider, TextArea } from 'semantic-ui-react';
+import $ from "jquery";
 
 class NewsRoom extends Component {
   constructor(props){
     super(props);
-    this.state = { showConfirm: false };
+    this.state = { showRelated: true };
   }
 
   render() {
@@ -16,37 +19,30 @@ class NewsRoom extends Component {
       var iFrame = null;
 
       if (this.props.comments) {
+        var relatedOrComments = this.state.showRelated ? (<Related changePage={(url) => this.changeToRelated(url)}/>) : (<Comments />);
+
         table = (
           <Grid.Row>
-            <Container style={{width: "80%"}}>
+            <Container fluid>
               <Grid>
-                <Grid.Row>
-                  <div style={{overflowY: "scroll", maxHeight:400, width:"100%"}}>
-                    <Comment.Group>
-                      {this.props.comments.map((comment) => (
-                        <Comment key={comment._id}>
-                          <Comment.Content>
-                            <Comment.Author>{comment.user.username}</Comment.Author>
-                            <Comment.Text>{comment.message}</Comment.Text>
-                          </Comment.Content>
-                        </Comment>
-                      ))}
-                    </Comment.Group>
-                  </div>
-                </Grid.Row>
                 <Grid.Row>
                   <Container fluid>
                     <Grid centered>
                       <Grid.Row>
-                        <TextArea placeholder=" enter a comment..." id="commentInput" type="text" size='mini' style={{borderRadius: 2, minHeight: 75, minWidth: "90%", maxWidth:"90%", maxHeight:200}}/>
-                      </Grid.Row>
-                      <Grid.Row>
-                        <Button onClick={() => this.submitCommentClicked()} size='medium' color='blue' style={{width:"50%"}}>
-                          Submit
-                        </Button>
+                        <Button.Group>
+                          <Button id="RelatedButton" active  onClick={() => this.relatedButtonClicked()}>
+                            Related
+                          </Button>
+                          <Button id="CommentsButton" onClick={() => this.commentsButtonClicked()}>
+                            Comments
+                          </Button>
+                        </Button.Group>
                       </Grid.Row>
                     </Grid>
                   </Container>
+                </Grid.Row>
+                <Grid.Row>
+                  {relatedOrComments}
                 </Grid.Row>
               </Grid>
             </Container>
@@ -55,7 +51,7 @@ class NewsRoom extends Component {
 
         iFrame = (
           <Container fluid>
-            <iframe id='iframe' src={this.getURL()} width="100%" style={{minHeight:window.outerHeight, height:"100%", overflow:"hidden"}} frameBorder="0" />
+            <iframe id='iframe' src={this.getURL()} width="100%" style={{minHeight:window.outerHeight+400, height:"100%", overflow:"hidden"}} frameBorder="0" />
             <br />
           </Container>
         );
@@ -81,26 +77,26 @@ class NewsRoom extends Component {
             </Grid.Column>
             <Grid.Column width={5} floated='right'>
               <Grid divided='vertically'>
-                <Container style={{width: "90%", height:160}}>
-                  <Grid.Row>
-                      <Grid>
-                        <Grid.Row>
-                          <h1 style={{top:20, position:"relative", fontSize:50}}>
-                            NewsRoom
-                          </h1>
-                        </Grid.Row>
-                        <Grid.Row>
-                          <h4>
-                            {title}
-                          </h4>
-                        </Grid.Row>
-                        <Grid.Row>
-                          <Input id="pageInput" type="text" onChange={() => this.pageInputChanged()} size='mini' style={{width:"70%", bottom:20, position:"relative"}}/>
-                        </Grid.Row>
-                      </Grid>
-                  </Grid.Row>
-                </Container>
-                {table}
+                <Grid.Row>
+                  <Container style={{width: "85%", height:160}}>
+                    <Grid>
+                      <Grid.Row>
+                        <h1 style={{top:20, position:"relative", fontSize:50}}>
+                          NewsRoom
+                        </h1>
+                      </Grid.Row>
+                      <Grid.Row>
+                        <h4>
+                          {title}
+                        </h4>
+                      </Grid.Row>
+                      <Grid.Row>
+                        <Input id="pageInput" type="text" onChange={() => this.pageInputChanged()} size='mini' style={{width:"70%", bottom:20, position:"relative"}}/>
+                      </Grid.Row>
+                    </Grid>
+                  </Container>
+                </Grid.Row>
+                  {table}
                 <Grid.Row>
                   <Container fluid>
                     <Grid centered>
@@ -131,7 +127,16 @@ class NewsRoom extends Component {
     this.pageInputChanged();
   }
 
+  changeToRelated(url) {
+    document.getElementById("pageInput").value = url;
+    this.pageInputChanged();
+  }
+
   pageInputChanged() {
+    this.setState({
+      showRelated: true
+    });
+
     var url = this.getURL();
 
     if (url == null || url == "") {
@@ -159,31 +164,26 @@ class NewsRoom extends Component {
     );
   }
 
-  submitCommentClicked() {
-    var submitButton = document.getElementById('commentInput');
-    var message = submitButton.value;
-    submitButton.value = "";
+  relatedButtonClicked() {
+    var relatedButton = document.getElementById("RelatedButton");
+    var commentsButton = document.getElementById("CommentsButton");
+    $(relatedButton).addClass('active');
+    $(commentsButton).removeClass('active');
 
-    // Submit new comment.
-    Client.post('users/' + this.props.user._id + '/pages/' + this.props.page._id + '/comments',
-      { message: message },
-      function (response) {
+    this.setState({
+      showRelated: true
+    });
+  }
 
-        // Get the new page comments.
-        Client.get('pages', {url: this.getURL()},
-          function (response) {
-            this.props.commentsChange(response.comments);
-          }.bind(this),
-          function (error) {
-            console.log(error);
-          }
-        )
+  commentsButtonClicked() {
+    var relatedButton = document.getElementById("RelatedButton");
+    var commentsButton = document.getElementById("CommentsButton");
+    $(relatedButton).removeClass('active');
+    $(commentsButton).addClass('active');
 
-      }.bind(this),
-      function (error) {
-        console.log(error);
-      }
-    );
+    this.setState({
+      showRelated: false
+    });
   }
 
   logOutClicked() {
