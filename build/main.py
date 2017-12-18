@@ -22,6 +22,10 @@ async def redirect_host_urls(request):
 async def index(request):
     return html(template('index.html').render())
 
+@app.route("/healthcheck")
+async def healthcheck(request):
+    return html('success')
+
 if __name__ == "__main__":
     print("Starting up newsroom-web...")
     app.run(host="0.0.0.0", port=8081)
