@@ -49,7 +49,7 @@ class NewsRoom extends Component {
           </Grid.Row>
         );
 
-        var iframe_url = this.props.page.html ? 'http://localhost:8080' + '/pages/'+this.props.page._id+'/html' : this.getURL();
+        var iframe_url = this.props.page.html ? 'https://api.newsroom.bep-projects.com' + '/pages/'+this.props.page._id+'/html' : this.getURL();
 
         iFrame = (
           <Container fluid>

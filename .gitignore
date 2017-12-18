@@ -1,6 +1,4 @@
 node_modules/
-build/static/styles/
-build/static/js/
 yarn.lock
 package-lock.json
 __pycache__/

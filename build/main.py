@@ -27,5 +27,5 @@ async def healthcheck(request):
     return html('success')
 
 if __name__ == "__main__":
-    print("Starting up newsroom-web...")
+    print("Starting up newsroom-web v1.0")
     app.run(host="0.0.0.0", port=8081)

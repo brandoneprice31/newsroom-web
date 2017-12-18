@@ -10,6 +10,7 @@ ecr_login="$(aws ecr get-login)"
 str_to_rm=" -e none"
 eval "$(echo "$ecr_login" | sed "s@$str_to_rm@@")"
 
+webpack;
 docker build -t newsroom-web:$1 .;
 docker tag newsroom-web:$1 832531170141.dkr.ecr.us-east-2.amazonaws.com/newsroom-web:$1;
 
