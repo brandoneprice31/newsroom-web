@@ -17,11 +17,6 @@ async def redirect_host_urls(request):
     if is_http(request):
         return redirect('https://' + request.url[len('http://'):])
 
-# exceptions
-@app.exception(NotFound)
-async def notfound(request, exception):
-    return redirect('/')
-
 # endpoints
 @app.route("/")
 async def index(request):

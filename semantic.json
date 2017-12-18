@@ -11,9 +11,9 @@
       "packaged": "../../build/static/styles/",
       "uncompressed": "../../build/static/styles/",
       "compressed": "../../build/static/styles/",
-      "themes": "dist/themes/"
+      "themes": "../../build/static/styles/themes/"
     },
-    "clean": "dist/"
+    "clean": "../../build/static/styles/"
   },
   "permission": false,
   "autoInstall": false,
