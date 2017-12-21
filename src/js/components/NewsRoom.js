@@ -80,12 +80,16 @@ class NewsRoom extends Component {
             <Grid.Column width={5} floated='right'>
               <Grid divided='vertically'>
                 <Grid.Row>
-                  <Container style={{width: "85%", height:160}}>
+                  <Container style={{width: "85%", height:190}}>
                     <Grid>
                       <Grid.Row>
-                        <h1 style={{top:20, position:"relative", fontSize:50}}>
-                          Newsroom
-                        </h1>
+                        <Container fluid>
+                          <Grid centered>
+                            <Grid.Row>
+                              <img src="/static/img/logo.png" style={{top:10, position:"relative", height:100}} />
+                            </Grid.Row>
+                          </Grid>
+                        </Container>
                       </Grid.Row>
                       <Grid.Row>
                         <h4>
