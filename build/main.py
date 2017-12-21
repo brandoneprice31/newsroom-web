@@ -9,14 +9,6 @@ app = Sanic()
 # static files
 app.static('/static', './static')
 
-# middlewares
-@app.middleware('request')
-async def redirect_host_urls(request):
-    if 'localhost' in request.url:
-        return None
-    if is_http(request):
-        return redirect('https://' + request.url[len('http://'):])
-
 # endpoints
 @app.route("/")
 async def index(request):

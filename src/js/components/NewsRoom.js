@@ -4,7 +4,7 @@ import Client from '../client/client';
 import Comments from './Comments';
 import Related from './Related';
 import {pageChange, commentsChange, logOutUser} from '../actions'
-import { Icon, Header, Dimmer, Container, Grid, Image, Segment, Comment, Button, Input, Divider, TextArea } from 'semantic-ui-react';
+import { Loader, Icon, Header, Dimmer, Container, Grid, Image, Segment, Comment, Button, Input, Divider, TextArea } from 'semantic-ui-react';
 import $ from "jquery";
 
 class NewsRoom extends Component {
@@ -97,7 +97,16 @@ class NewsRoom extends Component {
                         </h4>
                       </Grid.Row>
                       <Grid.Row>
-                        <Input id="pageInput" type="text" onChange={() => this.pageInputChanged()} size='mini' style={{width:"70%", bottom:20, position:"relative"}}/>
+                        <Container fluid>
+                          <Grid style={{bottom:20, position:"relative"}}>
+                            <Grid.Column width={13}>
+                              <Input id="pageInput" type="text" onChange={() => this.pageInputChanged()} size='mini' style={{width:"100%"}}/>
+                            </Grid.Column>
+                            <Grid.Column>
+                              <Loader id="loader" style={{left:"10%", position:"relative"}}/>
+                            </Grid.Column>
+                          </Grid>
+                        </Container>
                       </Grid.Row>
                     </Grid>
                   </Container>
@@ -149,9 +158,17 @@ class NewsRoom extends Component {
       return;
     }
 
+    var loader = document.getElementById("loader");
+    $(loader).addClass("active");
+
     // Get the page.
     Client.get("pages", { url: url },
       function (response) {
+        setTimeout(function(){
+          var loader = document.getElementById("loader");
+          $(loader).removeClass("active");
+        }, 1000);
+
         // Only change state if the page id changed.
         if (this.props.page && response.page._id == this.props.page._id) {
           return;
@@ -161,6 +178,9 @@ class NewsRoom extends Component {
         this.props.commentsChange(response.comments);
       }.bind(this),
       function (error) {
+        var loader = document.getElementById("loader");
+        $(loader).removeClass("active");
+
         console.log('Error:', error);
         this.props.pageChange(null);
         this.props.commentsChange(null);
