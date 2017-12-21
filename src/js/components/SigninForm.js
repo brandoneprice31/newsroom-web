@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Container, Grid, Image, Segment, Comment, Button, Input, Divider } from 'semantic-ui-react';
+var CryptoJS = require("crypto-js");
 
 import {signInUser} from '../actions';
 import Client from '../client/client';
@@ -58,9 +59,11 @@ class SigninForm extends Component {
       return;
     }
 
+    var hash = CryptoJS.SHA256(passwordInput.value).toString(CryptoJS.enc.Base64);
+
     // Login.
     Client.get("users/login",
-      { username: usernameInput.value, password: passwordInput.value },
+      { username: usernameInput.value, password: hash },
       function (response) {
         this.props.signInUser(response.user);
       }.bind(this),
@@ -95,9 +98,11 @@ class SigninForm extends Component {
       return;
     }
 
+    var hash = CryptoJS.SHA256(passwordInput.value).toString(CryptoJS.enc.Base64);
+
     // Sign up.
     Client.post("users/",
-      { username: usernameInput.value, password: passwordInput.value },
+      { username: usernameInput.value, password: hash },
       function (response) {
         this.props.signInUser(response.user);
       }.bind(this),
