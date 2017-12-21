@@ -3,7 +3,7 @@
 ### check it out [here](http://newsroom.bep-projects.com)
 
 ### run locally
-* run the [newsroom-api](github.com/brandoneprice31/newsroom-api) first
+* run the [newsroom-api](https://github.com/brandoneprice31/newsroom-api) first
 * install dependencies `npm install`
 * build stylesheets `cd src/styles; gulp build`
 * run the dev server `npm run start`
