@@ -1,6 +1,6 @@
 # newsroom-web
 
-### check it out [here](http://newsroom.bep-projects.com)
+### check it out [here](http://bep-projects.com?view=newsroom)
 
 ### run locally
 * run the [newsroom-api](https://github.com/brandoneprice31/newsroom-api) first
