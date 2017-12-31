@@ -1,6 +1,6 @@
 # newsroom-web
 
-### check it out [here](http://bep-projects.com?view=newsroom)
+replaced with [newsroom-chrome](https://github.com/brandoneprice31/newsroom-chrome)
 
 ### run locally
 * run the [newsroom-api](https://github.com/brandoneprice31/newsroom-api) first
